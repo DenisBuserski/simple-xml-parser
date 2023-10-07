@@ -12,6 +12,7 @@ import java.time.LocalDate;
 public class Book {
     @Id
     private String id;
+    private String author;
     private String title;
     private Genre genre;
     private BigDecimal price;
@@ -20,8 +21,9 @@ public class Book {
     private String description;
 
     public Book() {}
-    public Book(String id, String title, Genre genre, BigDecimal price, LocalDate publishDate, String description) {
+    public Book(String id, String author, String title, Genre genre, BigDecimal price, LocalDate publishDate, String description) {
         this.id = id;
+        this.author = author;
         this.title = title;
         this.genre = genre;
         this.price = price;

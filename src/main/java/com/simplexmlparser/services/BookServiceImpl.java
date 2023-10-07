@@ -19,7 +19,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book addBook(String id, String title, Genre genre, BigDecimal price, LocalDate publishDate, String description) {
-        return new Book(id, title, genre, price, publishDate, description);
+    public Book addBook(String id, String author, String title, Genre genre, BigDecimal price, LocalDate publishDate, String description) {
+        return new Book(id, author, title, genre, price, publishDate, description);
     }
 }

@@ -7,5 +7,5 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public interface BookService {
-    Book addBook(String id, String title, Genre genre, BigDecimal price, LocalDate publishDate, String description)
+    Book addBook(String id, String author, String title, Genre genre, BigDecimal price, LocalDate publishDate, String description);
 }
