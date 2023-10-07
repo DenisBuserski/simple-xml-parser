@@ -17,8 +17,13 @@ public class XmlReader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        try {
+        printBookInfo();
 
+
+    }
+
+    private void printBookInfo() {
+        try {
             File file = new File("src/main/resources/books.xml"); // Creating a constructor of file class and parsing an XML file
 
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance(); // An instance of factory that gives a document builder
@@ -39,20 +44,25 @@ public class XmlReader implements CommandLineRunner {
 
 
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element eElement = (Element) node;
-                    System.out.println("Author name: " + eElement.getElementsByTagName("author").item(0).getTextContent());
-                    System.out.println("Title: " + eElement.getElementsByTagName("title").item(0).getTextContent());
-                    System.out.println("Genre: " + eElement.getElementsByTagName("genre").item(0).getTextContent());
-                    System.out.println("Price: " + eElement.getElementsByTagName("price").item(0).getTextContent());
-                    System.out.println("Publish date: " + eElement.getElementsByTagName("publish_date").item(0).getTextContent());
-                    System.out.println("Description: " + eElement.getElementsByTagName("description").item(0).getTextContent());
+                    Element element = (Element) node;
+                    printBookId(nodeList);
+                    System.out.println("Author name: " + element.getElementsByTagName("author").item(0).getTextContent());
+                    System.out.println("Title: " + element.getElementsByTagName("title").item(0).getTextContent());
+                    System.out.println("Genre: " + element.getElementsByTagName("genre").item(0).getTextContent());
+                    System.out.println("Price: " + element.getElementsByTagName("price").item(0).getTextContent());
+                    System.out.println("Publish date: " + element.getElementsByTagName("publish_date").item(0).getTextContent());
+                    System.out.println("Description: " + element.getElementsByTagName("description").item(0).getTextContent());
                     System.out.println();
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
-
+    private void printBookId(NodeList nodeList) {
+        Element book = (Element) nodeList.item(0);
+        String bookId = book.getAttribute("id");
+        System.out.println("Book id: " + bookId);
     }
 }
