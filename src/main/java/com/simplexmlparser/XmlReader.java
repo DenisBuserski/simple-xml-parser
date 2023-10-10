@@ -9,10 +9,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -33,16 +36,7 @@ public class XmlReader implements CommandLineRunner {
         // printBookInfo();
 
         try {
-            File file = new File("src/main/resources/books.xml"); // Creating a constructor of file class and parsing an XML file
-
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance(); // An instance of factory that gives a document builder
-
-            DocumentBuilder documentBuilder = dbf.newDocumentBuilder(); // An instance of builder to parse the specified xml file
-            Document document = documentBuilder.parse(file);
-            document.getDocumentElement().normalize();
-
-            System.out.println("Root element: " + document.getDocumentElement().getNodeName() + System.lineSeparator());
-            NodeList nodeList = document.getElementsByTagName("book");
+            NodeList nodeList = getNodeList();
 
             for (int i = 0; i < nodeList.getLength(); i++) { // NodeList is not iterable, so we are using for loop
                 Node node = nodeList.item(i);
@@ -60,7 +54,7 @@ public class XmlReader implements CommandLineRunner {
                     String title = element.getElementsByTagName("title").item(0).getTextContent();
                     String authorName = element.getElementsByTagName("author").item(0).getTextContent();
 
-                    String genre = element.getElementsByTagName("genre").item(0).getTextContent();
+                    String genre = element.getElementsByTagName("genre").item(0).getTextContent().toUpperCase();
                     String price = element.getElementsByTagName("price").item(0).getTextContent();
                     String publish_date = element.getElementsByTagName("publish_date").item(0).getTextContent();
                     String description = element.getElementsByTagName("description").item(0).getTextContent();
@@ -84,18 +78,23 @@ public class XmlReader implements CommandLineRunner {
 
     }
 
+    private NodeList getNodeList() throws ParserConfigurationException, SAXException, IOException {
+        File file = new File("src/main/resources/books.xml"); // Creating a constructor of file class and parsing an XML file
+
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance(); // An instance of factory that gives a document builder
+
+        DocumentBuilder documentBuilder = dbf.newDocumentBuilder(); // An instance of builder to parse the specified xml file
+        Document document = documentBuilder.parse(file);
+        document.getDocumentElement().normalize();
+
+        System.out.println("Root element: " + document.getDocumentElement().getNodeName() + System.lineSeparator());
+        NodeList nodeList = document.getElementsByTagName("book");
+        return nodeList;
+    }
+
     private void printBookInfo() {
         try {
-            File file = new File("src/main/resources/books.xml"); // Creating a constructor of file class and parsing an XML file
-
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance(); // An instance of factory that gives a document builder
-
-            DocumentBuilder documentBuilder = dbf.newDocumentBuilder(); // An instance of builder to parse the specified xml file
-            Document document = documentBuilder.parse(file);
-            document.getDocumentElement().normalize();
-
-            System.out.println("Root element: " + document.getDocumentElement().getNodeName() + System.lineSeparator());
-            NodeList nodeList = document.getElementsByTagName("book");
+            NodeList nodeList = getNodeList();
 
             for (int i = 0; i < nodeList.getLength(); i++) { // NodeList is not iterable, so we are using for loop
                 Node node = nodeList.item(i);
@@ -103,8 +102,7 @@ public class XmlReader implements CommandLineRunner {
                 if (i == 0) {
                     System.out.println("Node Name :" + node.getNodeName() + System.lineSeparator());
                 }
-
-
+                
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element = (Element) node;
                     printBookId(nodeList);
