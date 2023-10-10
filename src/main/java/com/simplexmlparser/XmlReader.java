@@ -34,9 +34,9 @@ public class XmlReader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        // printBookInfo();
+        printBookInfo();
 
-        parseXmlToDB();
+        // parseXmlToDB();
 
 
     }
@@ -103,7 +103,7 @@ public class XmlReader implements CommandLineRunner {
 
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element = (Element) node;
-                    printBookId(nodeList);
+                    printBookId(nodeList, i);
                     System.out.println("Author name: " + element.getElementsByTagName("author").item(0).getTextContent());
                     System.out.println("Title: " + element.getElementsByTagName("title").item(0).getTextContent());
                     System.out.println("Genre: " + element.getElementsByTagName("genre").item(0).getTextContent());
@@ -118,8 +118,8 @@ public class XmlReader implements CommandLineRunner {
         }
     }
 
-    private void printBookId(NodeList nodeList) {
-        Element book = (Element) nodeList.item(0);
+    private void printBookId(NodeList nodeList, int index) {
+        Element book = (Element) nodeList.item(index);
         String bookId = book.getAttribute("id");
         System.out.println("Book id: " + bookId);
     }
