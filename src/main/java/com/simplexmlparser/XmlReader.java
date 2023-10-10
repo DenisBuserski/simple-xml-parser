@@ -36,6 +36,12 @@ public class XmlReader implements CommandLineRunner {
 
         // printBookInfo();
 
+        parseXmlToDB();
+
+
+    }
+
+    private void parseXmlToDB() {
         try {
             NodeList nodeList = getNodeList();
 
@@ -44,7 +50,7 @@ public class XmlReader implements CommandLineRunner {
 
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element = (Element) node;
-                    Element book = (Element) nodeList.item(0);
+                    Element book = (Element) nodeList.item(i);
                     String bookId = book.getAttribute("id");
                     String title = element.getElementsByTagName("title").item(0).getTextContent();
                     String genreString = element.getElementsByTagName("genre").item(0).getTextContent();
@@ -68,10 +74,6 @@ public class XmlReader implements CommandLineRunner {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
-
     }
 
     private NodeList getNodeList() throws ParserConfigurationException, SAXException, IOException {
