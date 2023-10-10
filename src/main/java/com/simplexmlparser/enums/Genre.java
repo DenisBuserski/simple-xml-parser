@@ -12,4 +12,8 @@ public enum Genre {
     Genre(String value) {
         this.value = value;
     }
+
+    public String getValue() {
+        return value;
+    }
 }

@@ -19,7 +19,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book addBook(String id, String author, String title, Genre genre, BigDecimal price, LocalDate publishDate, String description) {
-        return new Book(id, author, title, genre, price, publishDate, description);
+    public void addBook(String id, String author, String title, Genre genre, BigDecimal price, LocalDate publishDate, String description) {
+        Book book = new Book(id, author, title, genre, price, publishDate, description);
+        this.bookRepository.save(book);
     }
 }

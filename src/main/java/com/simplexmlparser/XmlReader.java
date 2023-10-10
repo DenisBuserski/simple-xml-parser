@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Arrays;
 
 
 @Component
@@ -41,32 +42,27 @@ public class XmlReader implements CommandLineRunner {
             for (int i = 0; i < nodeList.getLength(); i++) { // NodeList is not iterable, so we are using for loop
                 Node node = nodeList.item(i);
 
-                if (i == 0) {
-                    System.out.println("Node Name :" + node.getNodeName() + System.lineSeparator());
-                }
-
-
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    // Book(String id, String title, Genre genre, BigDecimal price, LocalDate publishDate, String description)
                     Element element = (Element) node;
                     Element book = (Element) nodeList.item(0);
                     String bookId = book.getAttribute("id");
                     String title = element.getElementsByTagName("title").item(0).getTextContent();
+                    String genreString = element.getElementsByTagName("genre").item(0).getTextContent();
+                    Genre genre = Arrays.stream(Genre.values()).filter(value -> value.getValue().equals(genreString)).findFirst().get();
                     String authorName = element.getElementsByTagName("author").item(0).getTextContent();
-
-                    String genre = element.getElementsByTagName("genre").item(0).getTextContent().toUpperCase();
                     String price = element.getElementsByTagName("price").item(0).getTextContent();
                     String publish_date = element.getElementsByTagName("publish_date").item(0).getTextContent();
                     String description = element.getElementsByTagName("description").item(0).getTextContent();
 
                     this.bookService.addBook(
                             bookId,
-                            title,
                             authorName,
-                            Genre.valueOf(genre),
+                            title,
+                            genre,
                             BigDecimal.valueOf(Double.parseDouble(price)),
                             LocalDate.parse(publish_date),
                             description);
+                    System.out.println("Added book: " + title);
                 }
             }
         } catch (Exception e) {
@@ -102,7 +98,7 @@ public class XmlReader implements CommandLineRunner {
                 if (i == 0) {
                     System.out.println("Node Name :" + node.getNodeName() + System.lineSeparator());
                 }
-                
+
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element = (Element) node;
                     printBookId(nodeList);
