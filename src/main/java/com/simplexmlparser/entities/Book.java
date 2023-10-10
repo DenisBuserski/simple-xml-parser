@@ -13,6 +13,8 @@ public class Book {
     private String id;
     private String author;
     private String title;
+
+    @Enumerated(value = EnumType.STRING)
     private Genre genre;
     private BigDecimal price;
     @Column(name = "publish_date")

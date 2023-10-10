@@ -34,9 +34,9 @@ public class XmlReader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        printBookInfo();
+        // printBookInfo();
 
-        // parseXmlToDB();
+        parseXmlToDB();
 
 
     }
